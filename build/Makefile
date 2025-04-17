@@ -1,0 +1,32 @@
+CC=gcc
+CFLAGS=-O3 -Wall -Wextra -Werror -pedantic -Wconversion -std=c99 
+
+binaries = u1_conf
+
+all: $(binaries)
+
+boxmuller.o: ../lib/boxmuller.c ../include/boxmuller.h
+	$(CC) $(CFLAGS) -c ../lib/boxmuller.c
+
+geometry_st.o: ../lib/geometry_st.c ../include/geometry_st.h 
+	$(CC) $(CFLAGS) -c ../lib/geometry_st.c  
+
+pcg32min.o: ../lib/pcg32min.c ../include/pcg32min.h 
+	$(CC) $(CFLAGS) -c ../lib/pcg32min.c
+
+random.o: ../lib/random.c ../include/pcg32min.h ../include/random.h
+	$(CC) $(CFLAGS) -c ../lib/random.c
+
+read_data.o: ../lib/read_data.c ../include/read_data.h
+	$(CC) $(CFLAGS) -c ../lib/read_data.c
+
+u1_conf: ../src/u1_conf.c geometry_st.o random.o pcg32min.o
+	$(CC) $(CFLAGS) -c ../src/u1_conf.c  
+	$(CC) $(CFLAGS) u1_conf.o geometry_st.o random.o pcg32min.o -o $@ -lm
+
+.PHONY: clean
+clean:
+	rm -f $(binaries) *.o
+
+cleanobj:
+	rm -f *.o
