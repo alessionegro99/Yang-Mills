@@ -571,9 +571,10 @@ int main(int argc, char **argv) {
 
       fprintf(fp, "%.12f ",
               (nonplanarWilsonloop(lattice, nnp, nnm, 1, 1, 1, epsilon, beta,
-                                  stvolume, 1, 2) +
-                  nonplanarWilsonloop(lattice, nnp, nnm, 1, 1, 1, epsilon, beta,
-                                      stvolume, 2, 1))/2.0);
+                                   stvolume, 1, 2) +
+               nonplanarWilsonloop(lattice, nnp, nnm, 1, 1, 1, epsilon, beta,
+                                   stvolume, 2, 1)) /
+                  2.0);
 
       fprintf(fp, "\n");
     }
