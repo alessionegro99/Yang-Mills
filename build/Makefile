@@ -8,8 +8,11 @@ all: $(binaries)
 boxmuller.o: ../lib/boxmuller.c ../include/boxmuller.h
 	$(CC) $(CFLAGS) -c ../lib/boxmuller.c
 
-geometry_st.o: ../lib/geometry_st.c ../include/geometry_st.h 
-	$(CC) $(CFLAGS) -c ../lib/geometry_st.c  
+geometry.o: ../lib/geometry.c ../include/geometry.h 
+	$(CC) $(CFLAGS) -c ../lib/geometry.c  
+
+measure.o: ../lib/measure.c ../include/measure.h
+	$(CC) $(CFLAGS) -c ../lib/measure.c
 
 pcg32min.o: ../lib/pcg32min.c ../include/pcg32min.h 
 	$(CC) $(CFLAGS) -c ../lib/pcg32min.c
@@ -20,9 +23,12 @@ random.o: ../lib/random.c ../include/pcg32min.h ../include/random.h
 read_data.o: ../lib/read_data.c ../include/read_data.h
 	$(CC) $(CFLAGS) -c ../lib/read_data.c
 
-u1_conf: ../src/u1_conf.c geometry_st.o random.o pcg32min.o
+update.o: ../lib/update.c ../include/update.h
+	$(CC) $(CFLAGS) -c ../lib/update.c
+
+u1_conf: ../src/u1_conf.c geometry.o random.o pcg32min.o measure.o update.o
 	$(CC) $(CFLAGS) -c ../src/u1_conf.c  
-	$(CC) $(CFLAGS) u1_conf.o geometry_st.o random.o pcg32min.o -o $@ -lm
+	$(CC) $(CFLAGS) u1_conf.o geometry.o random.o pcg32min.o measure.o update.o -o $@ -lm
 
 .PHONY: clean
 clean:
